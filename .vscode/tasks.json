@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "create day",
+            "type": "shell",
+            "command": "plop --plopfile ./plopfile.cjs",
+            "problemMatcher": []
+        },
+        {
+            "label": "run current day's tests",
+            "type": "shell",
+            "command": "mocha '${fileDirname}/*test.js'",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "runOptions": {
+                "reevaluateOnRerun": true
+            }
+        },
+        {
+            "label": "run all unit tests",
+            "type": "shell",
+            "command": "mocha day*/*.test.js",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
