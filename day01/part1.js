@@ -1,7 +1,6 @@
 import R from 'ramda';
 
-const debug = x => { debugger; return x; };
+const parseInput = R.pipe(R.split('\n'), R.map(parseInt));
+const isIncreasing = ([a, b]) => a < b;
 
-const parseInput = R.pipe(R.split('\n'));
-
-export default R.pipe(parseInput, debug);
+export default R.pipe(parseInput, R.aperture(2), R.map(isIncreasing), R.sum);
