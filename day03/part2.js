@@ -5,10 +5,9 @@ const parseInput = R.pipe(R.split('\n'), R.map(parseLine));
 const mostCommon = xs => R.sum(xs) >= xs.length / 2 ? 1 : 0;
 const leastCommon = xs => xs.length > 1 ? 1 - mostCommon(xs) : xs[0];
 
-const isMatch = R.curry((target, i, num) => num[i] === target);
 const getDigits = (xs, i) => R.pipe(R.transpose, xs => xs[i])(xs);
 const toDigit = R.pipe(R.join(''), x => parseInt(x, 2));
-const filterBy = R.curry((f, nums, i) => R.filter(isMatch(f(getDigits(nums, i)), i), nums));
+const filterBy = R.curry((f, nums, i) => R.filter(x => x[i] === f(getDigits(nums, i)), nums));
 const find = R.curry((f, nums) => toDigit(R.head(R.reduce(filterBy(f), nums, R.range(0, nums[0].length)))));
 
 export default R.pipe(parseInput, R.converge(R.multiply, [find(mostCommon), find(leastCommon)]));
