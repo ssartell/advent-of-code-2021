@@ -4,7 +4,7 @@ import part2 from './part2.js';
 describe('day01', function() {
     describe('part2', function() {
         // it('test', function() {
-        //     assert.equal(part1("hello"), "hello");
+        //     assert.equal(part2("hello"), "world");
         // });
     });
 });
