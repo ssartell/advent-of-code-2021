@@ -15,3 +15,13 @@ export default function* (list, n) {
       }
     }
   };
+
+export const pairs = xs => {
+  const pair = [];
+  for(let i = 0; i < xs.length; i++) {
+    for(let j = i + 1; j < xs.length; j++) {
+      pair.push([xs[i], xs[j]]);
+    }
+  }
+  return pair;
+}
