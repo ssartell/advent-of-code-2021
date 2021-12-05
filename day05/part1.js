@@ -6,8 +6,7 @@ const isStraight = ({p1, p2}) => p1.x === p2.x || p1.y === p2.y;
 const parseInput = R.pipe(R.split('\n'), R.map(parseLine), R.filter(isStraight));
 
 const add = (p1, p2) => ({x: p1.x + p2.x, y: p1.y + p2.y});
-const onLine = (line, p) => Math.min(line.p1.x, line.p2.x) <= p.x && Math.max(line.p1.x, line.p2.x) >= p.x 
-  && Math.min(line.p1.y, line.p2.y) <= p.y && Math.max(line.p1.y, line.p2.y) >= p.y
+const onLine = (line, p) => Math.abs(p.x - line.p1.x) <= Math.abs(line.p2.x - line.p1.x) && Math.abs(p.y - line.p1.y) <= Math.abs(line.p2.y - line.p1.y);
 
 const findIntersections = lines => {
   let count = 0;
