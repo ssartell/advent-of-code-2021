@@ -1,0 +1,25 @@
+export const add = (v1, v2) => ({x: v1.x + v2.x, y: v1.y + v2.y});
+export const sub = (v1, v2) => ({x: v1.x - v2.x, y: v1.y - v2.y});
+export const equals = (v1, v2) => v1.x === v2.x && v1.y === v2.y;
+export const dot = (v1, v2) => v1.x * v2.x + v1.y * v2.y;
+export const cross = (v1, v2) => v1.x * v2.y - v1.y * v2.x;
+export const length = (v) => Math.sqrt(dot(v, v));
+export const scale = (v, s) => ({x: v.x * s, y: v.y * s});
+export const normalize = (v) => scale(v, 1 / length(v));
+export const abs = (v) => ({x: Math.abs(v.x), y: Math.abs(v.y)});
+export const min = (v1, v2) => ({x: Math.min(v1.x, v2.x), y: Math.min(v1.y, v2.y)});
+export const max = (v1, v2) => ({x: Math.max(v1.x, v2.x), y: Math.max(v1.y, v2.y)});
+export const clamp = (v, min, max) => ({x: Math.max(min.x, Math.min(max.x, v.x)), y: Math.max(min.y, Math.min(max.y, v.y))});
+export const sign = (v) => ({x: Math.sign(v.x), y: Math.sign(v.y)});
+export const rotate = (v, a) => {
+  const c = Math.cos(a);
+  const s = Math.sin(a);
+  return { x: v.x * c - v.y * s, y: v.x * s + v.y * c };
+};
+export const angle = (v1, v2) => Math.atan2(cross(v1, v2), dot(v1, v2));
+export const lerp = (v1, v2, t) => ({ x: v1.x + (v2.x - v1.x) * t, y: v1.y + (v2.y - v1.y) * t });
+export const map = (f, v) => ({ x: f(v.x), y: f(v.y) });
+export const toString = (v) => `{x: ${v.x}, y: ${v.y}}`;
+export const toArray = (v) => [v.x, v.y];
+export const fromArray = (a) => ({x: a[0], y: a[1]});
+export const fromAngle = (a) => ({x: Math.cos(a), y: Math.sin(a)});
