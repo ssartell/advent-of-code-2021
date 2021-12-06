@@ -3,7 +3,7 @@ import R from 'ramda';
 const parseInput = R.pipe(R.split(','), R.map(parseInt));
 
 const simulate = R.curry((days, fishes) => {
-  for(let i = 0; i < days; i++) {
+  while(days--) {
     let nextFishes = [];
     for(let fish of fishes) {
       if (fish == 0) {
