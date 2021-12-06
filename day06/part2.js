@@ -1,12 +1,10 @@
 import R from 'ramda';
 
-const debug = x => { debugger; return x; };
-
 const parseInput = R.pipe(R.split(','), R.map(parseInt), R.groupBy(R.identity), R.map(R.length));
 
 const sum = R.pipe(R.values, R.sum);
 const simulate = R.curry((days, generation) => {
-  for(let i = 0; i < days; i++) {
+  while(days--) {
     let tng = {};
     for(let key in generation) {
       let count = generation[key];
