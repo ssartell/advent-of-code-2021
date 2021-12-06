@@ -2,23 +2,20 @@ import R from 'ramda';
 
 const parseInput = R.pipe(R.split(','), R.map(parseInt), R.groupBy(R.identity), R.map(R.length));
 
-const sum = R.pipe(R.values, R.sum);
-const simulate = R.curry((days, generation) => {
+const simulate = R.curry((days, gen) => {
   while(days--) {
     let tng = {};
-    for(let key in generation) {
-      let count = generation[key];
-      if (key - 1 >= 0) {
-        tng[key - 1] = count + (tng[key - 1] || 0);
+    for(let time in gen) {
+      if (time - 1 >= 0) {
+        tng[time - 1] = gen[time] + (tng[time - 1] || 0);
       } else {
-        tng[6] = count;
-        tng[8] = count;
+        tng[6] = gen[time];
+        tng[8] = gen[time];
       }
     }
-    generation = tng;
+    gen = tng;
   }
-
-  return sum(generation);
+  return gen;
 });
 
-export default R.pipe(parseInput, simulate(256));
+export default R.pipe(parseInput, simulate(256), R.values, R.sum);
