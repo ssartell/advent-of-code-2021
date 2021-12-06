@@ -6,11 +6,11 @@ const simulate = R.curry((days, gen) => {
   while(days--) {
     let tng = {};
     for(let time in gen) {
-      if (time - 1 >= 0) {
-        tng[time - 1] = gen[time] + (tng[time - 1] || 0);
-      } else {
+      if (time === 0) {
         tng[6] = gen[time];
         tng[8] = gen[time];
+      } else {
+        tng[time - 1] = gen[time] + (tng[time - 1] || 0);
       }
     }
     gen = tng;

@@ -6,7 +6,7 @@ const simulate = R.curry((days, fishes) => {
   while(days--) {
     let nextFishes = [];
     for(let fish of fishes) {
-      if (fish == 0) {
+      if (fish === 0) {
         nextFishes.push(6);
         nextFishes.push(8);
       } else {
