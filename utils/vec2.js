@@ -1,10 +1,10 @@
 export const add = (v1, v2) => ({x: v1.x + v2.x, y: v1.y + v2.y});
 export const sub = (v1, v2) => ({x: v1.x - v2.x, y: v1.y - v2.y});
-export const equals = (v1, v2) => v1.x === v2.x && v1.y === v2.y;
+export const scale = (v, s) => ({x: v.x * s, y: v.y * s});
 export const dot = (v1, v2) => v1.x * v2.x + v1.y * v2.y;
 export const cross = (v1, v2) => v1.x * v2.y - v1.y * v2.x;
+export const equals = (v1, v2) => v1.x === v2.x && v1.y === v2.y;
 export const length = (v) => Math.sqrt(dot(v, v));
-export const scale = (v, s) => ({x: v.x * s, y: v.y * s});
 export const normalize = (v) => scale(v, 1 / length(v));
 export const abs = (v) => ({x: Math.abs(v.x), y: Math.abs(v.y)});
 export const min = (v1, v2) => ({x: Math.min(v1.x, v2.x), y: Math.min(v1.y, v2.y)});
@@ -16,10 +16,13 @@ export const rotate = (v, a) => {
   const s = Math.sin(a);
   return { x: v.x * c - v.y * s, y: v.x * s + v.y * c };
 };
+export const rotate90 = (v) => ({x: -v.y, y: v.x});
+export const rotate180 = (v) => ({x: -v.x, y: -v.y});
+export const rotate270 = (v) => ({x: v.y, y: -v.x});
 export const angle = (v1, v2) => Math.atan2(cross(v1, v2), dot(v1, v2));
-export const lerp = (v1, v2, t) => ({ x: v1.x + (v2.x - v1.x) * t, y: v1.y + (v2.y - v1.y) * t });
+export const lerp = (v1, v2, t) => add(scale(v1, 1 - t), scale(v2, t));
 export const map = (f, v) => ({ x: f(v.x), y: f(v.y) });
-export const toString = (v) => `{x: ${v.x}, y: ${v.y}}`;
+export const toString = (v) => `<${v.x}, ${v.y}>`;
 export const toArray = (v) => [v.x, v.y];
 export const fromArray = (a) => ({x: a[0], y: a[1]});
 export const fromAngle = (a) => ({x: Math.cos(a), y: Math.sin(a)});

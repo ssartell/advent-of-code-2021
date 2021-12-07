@@ -1,0 +1,18 @@
+export const add = (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z });
+export const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
+export const scale = (a, s) => ({ x: a.x * s, y: a.y * s, z: a.z * s });
+export const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
+export const cross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x });
+export const equal = (a, b) => a.x === b.x && a.y === b.y && a.z === b.z;
+export const length = (a) => Math.sqrt(dot(a, a));
+export const normalize = (a) => scale(a, 1 / length(a));
+export const abs = (a) => ({ x: Math.abs(a.x), y: Math.abs(a.y), z: Math.abs(a.z) });
+export const min = (a, b) => ({ x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), z: Math.min(a.z, b.z) });
+export const max = (a, b) => ({ x: Math.max(a.x, b.x), y: Math.max(a.y, b.y), z: Math.max(a.z, b.z) });
+export const clamp = (a, min, max) => ({ x: Math.min(Math.max(a.x, min.x), max.x), y: Math.min(Math.max(a.y, min.y), max.y), z: Math.min(Math.max(a.z, min.z), max.z) });
+export const sign = (a) => ({ x: Math.sign(a.x), y: Math.sign(a.y), z: Math.sign(a.z) });
+export const lerp = (a, b, t) => add(scale(a, 1 - t), scale(b, t));
+export const map = (f, v) => ({ x: f(v.x), y: f(v.y), z: f(v.z) });
+export const toString = (a) => `<${a.x}, ${a.y}, ${a.z}>`;
+export const toArray = (a) => [a.x, a.y, a.z];
+export const fromArray = (a) => ({ x: a[0], y: a[1], z: a[2] });
