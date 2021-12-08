@@ -1,5 +1,6 @@
 import R from 'ramda';
-import { Heap, Queue, Stack } from 'mnemonist';
+import m from 'mnemonist';
+let { Heap, Queue, Stack } = m;
 
 export const aStar = (start, isEnd, getNeighbors, g, h, getKey = x => x) => {
     var notVisited = new Heap(R.comparator((a, b) => g(a) + h(a) <= g(b) + h(b)));
