@@ -19,15 +19,14 @@ const match = {
   9: (map, x) => x.size === 6 && !match[6](map, x) && !match[0](map, x)
 };
 
-const segmentSeq = [1,7,4,8,3,2,5,6,0,9];
 const solveOutput = ({signals, output}) => {
   let map = {};
-  for(let i of segmentSeq){
+  for(let i of [1,7,4,8,3,2,5,6,0,9]){
     map[i] = R.find(x => match[i](map, x), signals);
   }
   let res = "";
   for(let outputSet of output) {
-    for(let i of segmentSeq) {
+    for(let i = 0; i <= 9; i++) {
       if(areSetsEqual(map[i], outputSet)) {
         res += i;
       }
