@@ -1,7 +1,7 @@
 import R from 'ramda';
 import M from 'mnemonist/set.js';
 
-const parseLine = R.pipe(R.split(' | '), R.map(R.split(' ')), R.map(R.map(x => new Set(x))), R.zipObj(['signals', 'output']));
+const parseLine = R.pipe(R.split(' | '), R.map(R.split(' ')), R.map(R.map(x => new Set(x))));
 const parseInput = R.pipe(R.split('\r\n'), R.map(parseLine));
 
 let areSetsEqual = (a, b) => a.size === b.size && [...a].every(x => b.has(x));
@@ -19,7 +19,7 @@ const match = {
   9: (map, x) => x.size === 6 && !match[6](map, x) && !match[0](map, x)
 };
 
-const solveOutput = ({signals, output}) => {
+const solveOutput = ([signals, output]) => {
   let map = {};
   for(let i of [1,7,4,8,3,2,5,6,0,9]){
     map[i] = R.find(x => match[i](map, x), signals);
