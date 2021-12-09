@@ -7,7 +7,7 @@ const size = x => (x.toString(2).match(/1/g) || []).length;
 
 const match = {
   0: (x, known) => size(x) === 6 && (x | known[3]) === known[8],
-  1: (x, maknownp) => size(x) === 2,
+  1: (x, known) => size(x) === 2,
   2: (x, known) => size(x) === 5 && (x | known[4]) === known[8],
   3: (x, known) => size(x) === 5 && (x | known[1]) === x,
   4: (x, known) => size(x) === 4,
@@ -19,20 +19,20 @@ const match = {
 };
 
 const solveOutput = ([signals, output]) => {
-  let known = [];
+  let knownDigits = [];
   for(let i of [1,7,4,8,3,2,5,6,0,9]) {
-    known[i] = R.find(x => match[i](x, known), signals);
-    signals = R.without([known[i]], signals);
+    knownDigits[i] = R.find(x => match[i](x, knownDigits), signals);
+    signals = R.without([knownDigits[i]], signals);
   }
-  let res = "";
-  for(let outputSet of output) {
+  let result = "";
+  for(let outDigit of output) {
     for(let i = 0; i <= 9; i++) {
-      if(known[i] === outputSet) {
-        res += i;
+      if(knownDigits[i] === outDigit) {
+        result += i;
       }
     }
   }
-  return parseInt(res);
+  return parseInt(result);
 }
 
 export default R.pipe(parseInput, R.map(solveOutput), R.sum);
