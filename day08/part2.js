@@ -6,28 +6,28 @@ const parseInput = R.pipe(R.split('\r\n'), R.map(parseLine));
 const size = x => (x.toString(2).match(/1/g) || []).length;
 
 const match = {
-  0: (map, x) => size(x) === 6 && (x | map[3]) === map[8],
-  1: (map, x) => size(x) === 2,
-  2: (map, x) => size(x) === 5 && (x | map[4]) === map[8],
-  3: (map, x) => size(x) === 5 && (x | map[1]) === x,
-  4: (map, x) => size(x) === 4,
-  5: (map, x) => size(x) === 5,
-  6: (map, x) => size(x) === 6 && (x | map[1]) === map[8],
-  7: (map, x) => size(x) === 3,
-  8: (map, x) => size(x) === 7,
-  9: (map, x) => size(x) === 6
+  0: (x, known) => size(x) === 6 && (x | known[3]) === known[8],
+  1: (x, maknownp) => size(x) === 2,
+  2: (x, known) => size(x) === 5 && (x | known[4]) === known[8],
+  3: (x, known) => size(x) === 5 && (x | known[1]) === x,
+  4: (x, known) => size(x) === 4,
+  5: (x, known) => size(x) === 5,
+  6: (x, known) => size(x) === 6 && (x | known[1]) === known[8],
+  7: (x, known) => size(x) === 3,
+  8: (x, known) => size(x) === 7,
+  9: (x, known) => size(x) === 6
 };
 
 const solveOutput = ([signals, output]) => {
-  let map = {};
+  let known = [];
   for(let i of [1,7,4,8,3,2,5,6,0,9]) {
-    map[i] = R.find(x => match[i](map, x), signals);
-    signals = R.without([map[i]], signals);
+    known[i] = R.find(x => match[i](x, known), signals);
+    signals = R.without([known[i]], signals);
   }
   let res = "";
   for(let outputSet of output) {
     for(let i = 0; i <= 9; i++) {
-      if(map[i] === outputSet) {
+      if(known[i] === outputSet) {
         res += i;
       }
     }
