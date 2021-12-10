@@ -27,7 +27,8 @@ export const bfs = (start, isEnd, getNeighbors, getKey = x => x) => {
       var key = getKey(current);
       if (seen.has(key)) continue;
       seen.add(key);
-      if (isEnd(current)) return current;
+      if (isEnd(current)) 
+        return current;
       for(var neighbor of getNeighbors(current)) {
           notVisited.enqueue(neighbor);
       }
