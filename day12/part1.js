@@ -19,20 +19,20 @@ const buildMap = input => {
 const isLargeCave = x => x.toUpperCase() === x;
 
 const countPaths = map => {
-  let count = 0;
-  let uniq = 0;
+  let pathsCount = 0;
+  let key = 0;
   const getNeighbors = x => {
     let visited = new Set(x.visited).add(x.name);
     let legalNeighbors = R.filter(x => isLargeCave(x) || !visited.has(x), map.get(x.name));
     return R.map(neighbor => ({ name: neighbor, visited }), legalNeighbors);
   };
   const isEnd = x => { 
-    if (x.name === "end") count++;
+    if (x.name === "end") pathsCount++;
     return false;
   };
-  const getKey = () => uniq++;
+  const getKey = () => key++;
   bfs({ name: "start", visited: new Set() }, isEnd, getNeighbors, getKey);
-  return count;
+  return pathsCount;
 };
 
 export default R.pipe(parseInput, buildMap, countPaths);
