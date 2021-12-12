@@ -8,8 +8,7 @@ const parseInput = R.pipe(R.split('\r\n'), R.map(parseLine));
 
 const buildMap = input => {
   let map = new Map();
-  for(let line of R.concat(input, R.map(R.reverse, input))) {
-    let [from, to] = line;
+  for(let [from, to] of R.concat(input, R.map(R.reverse, input))) {
     if (!map.has(from)) map.set(from, []);
     if (to !== "start" && from !== "end") map.get(from).push(to);
   }
