@@ -19,6 +19,7 @@ export const rotate = (v, a) => {
 export const rotate90 = (v) => ({x: -v.y, y: v.x});
 export const rotate180 = (v) => ({x: -v.x, y: -v.y});
 export const rotate270 = (v) => ({x: v.y, y: -v.x});
+export const reflect = (v, n) => sub(v, scale(n, 2 * dot(v, n)));
 export const angle = (v1, v2) => Math.atan2(cross(v1, v2), dot(v1, v2));
 export const lerp = (v1, v2, t) => add(scale(v1, 1 - t), scale(v2, t));
 export const map = (f, v) => ({ x: f(v.x), y: f(v.y) });
