@@ -1,8 +1,6 @@
 import R from 'ramda';
 import { bfs } from '../utils/graph-traversal.js';
 
-const debug = x => { debugger; return x; };
-
 const parseLine = R.pipe(R.split('-'));
 const parseInput = R.pipe(R.split('\r\n'), R.map(parseLine));
 

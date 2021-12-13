@@ -4,18 +4,8 @@ let { Stack } = m;
 
 const parseInput = R.pipe(R.split('\n'), R.map(R.split('')));
 
-const charPairs = {
-  '(': ')',
-  '[': ']',
-  '{': '}',
-  '<': '>'
-};
-const scores = {
-  ')': 1,
-  ']': 2,
-  '}': 3,
-  '>': 4,
-};
+const charPairs = { '(': ')', '[': ']', '{': '}', '<': '>' };
+const scores = { ')': 1, ']': 2, '}': 3, '>': 4 };
 
 const isOpen = x => !!x.match(/[\(\[\{\<]/);
 const isClose = x => !!x.match(/[\)\]\}\>]/);

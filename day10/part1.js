@@ -7,12 +7,7 @@ const parseInput = R.pipe(R.split('\n'), R.map(R.split('')));
 const isOpen = x => !!x.match(/[\(\[\{\<]/);
 const isClose = x => !!x.match(/[\)\]\}\>]/);
 const openMatchesClose = (open, close) => Math.abs(close.charCodeAt(0) - open.charCodeAt(0)) <= 2;
-const scores = {
-  ')': 3,
-  ']': 57,
-  '}': 1197,
-  '>': 25137,
-};
+const scores = { ')': 3, ']': 57, '}': 1197, '>': 25137 };
 
 const corrupted = line => {
   const stack = new Stack();
