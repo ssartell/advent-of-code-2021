@@ -1,11 +1,7 @@
 import R from 'ramda';
 import { equals } from '../utils/vec2.js';
 import { range } from '../utils/ramda.js';
-import { fold } from './part1.js';
-
-const parseDots = R.map(R.pipe(R.split(','), R.map(Number), R.zipObj(['x', 'y'])));
-const parseFolds = R.map(R.pipe(R.split(' '), R.last, R.split('='), R.zipObj(['dir', 'pos']), R.evolve({ pos: Number })));
-const parseInput = R.pipe(R.split('\r\n\r\n'), R.map(R.split('\r\n')), R.zipObj(['dots', 'folds']), R.evolve({ dots: parseDots, folds: parseFolds }));
+import { parseInput, fold } from './part1.js';
 
 const print = dots => {
   let result = "";

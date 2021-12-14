@@ -3,7 +3,7 @@ import { add, sub, reflect, cross, toString } from '../utils/vec2.js';
 
 const parseDots = R.map(R.pipe(R.split(','), R.map(Number), R.zipObj(['x', 'y'])));
 const parseFolds = R.map(R.pipe(R.split(' '), R.last, R.split('='), R.zipObj(['dir', 'pos']), R.evolve({ pos: Number })));
-const parseInput = R.pipe(R.split('\r\n\r\n'), R.map(R.split('\r\n')), R.zipObj(['dots', 'folds']), R.evolve({ dots: parseDots, folds: parseFolds }));
+export const parseInput = R.pipe(R.split('\r\n\r\n'), R.map(R.split('\r\n')), R.zipObj(['dots', 'folds']), R.evolve({ dots: parseDots, folds: parseFolds }));
 
 export const fold = (dots, fold) => {
   let pos = fold.dir === 'x' ? { x: fold.pos, y: 0 } : { x: 0, y: fold.pos };
