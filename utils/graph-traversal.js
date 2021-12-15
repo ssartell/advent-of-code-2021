@@ -16,6 +16,7 @@ export const aStar = (start, isEnd, getNeighbors, g, h, getKey = x => x) => {
             notVisited.push(neighbor);
         }
     }
+    return null;
 };
 
 export const bfs = (start, isEnd, getNeighbors, getKey = x => x) => {

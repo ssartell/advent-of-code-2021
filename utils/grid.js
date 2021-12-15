@@ -37,6 +37,17 @@ export const getCardinalNeighbors = R.curry((grid, pos) => {
   return neighbors;
 });
 
+export const getCardinalNeighborsUnbounded = R.curry((grid, pos) => {
+  let neighbors = [];
+  let dir = {x: 1, y: 0};
+  for(let i = 0; i < 4; i++) {
+    let neighbor = add(pos, dir);
+    neighbors.push(neighbor);
+    dir = rotate90(dir);
+  }
+  return neighbors;
+});
+
 export const isInBounds = R.curry((grid, {x, y}) => {
   return x >= 0 && x < grid[0].length && y >= 0 && y < grid.length;
 });
@@ -55,3 +66,8 @@ export const setValue = R.curry((grid, pos, value) => {
 });
 
 export const readValues = grid => R.map(x => getValue(grid, x), gridPositions(grid));
+
+export const getSize = grid => ({
+  x: grid[0].length,
+  y: grid.length
+});
