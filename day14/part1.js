@@ -22,7 +22,7 @@ const run = R.memoizeWith(key, (rules, str, depth) => {
   const part1 = run(rules, str[0] + rule, depth - 1);
   const part2 = run(rules, rule + str[1], depth - 1);
   const counts = R.mergeWith(R.add, part1, part2);
-  counts[rule] = (counts[rule] || 0) - 1;
+  counts[rule]--;
   return counts;
 });
 
@@ -31,10 +31,10 @@ export const split = (rules, template, depth) => {
   let pairs = R.aperture(2, R.split('', template));
   for(let pair of pairs) {
     counts = R.mergeWith(R.add, counts, run(rules, pair[0] + pair[1], depth - 1));
-    counts[pair[1]] = counts[pair[1]] - 1;
+    counts[pair[1]]--;
   }
   let lastChar = R.last(template);
-  counts[lastChar] = counts[lastChar] + 1;
+  counts[lastChar]++;
   return counts;
 }
 
