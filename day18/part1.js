@@ -52,7 +52,6 @@ const explode = num => {
       if (a.parent === b.parent) {
         let parent = a.parent.parent;
         let i = a.parent.index;
-        if (i === undefined) debugger;
         parent[i] = {
           value: 0,
           parent,
@@ -63,7 +62,7 @@ const explode = num => {
         if (a.prev) {
           a.prev.value += a.value;
           a.prev.next = parent[i];
-        };
+        }
         if (b.next) {
           b.next.value += b.value;
           b.next.prev = parent[i];
