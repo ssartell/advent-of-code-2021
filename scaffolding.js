@@ -13,19 +13,23 @@ function pad(digit, width, char) {
 
 //async function run(day, part, shouldRunTests) {
 export default async function run(day, part, shouldRunTests) {
-  let log = 'day ' + day + ', part ' + part
+  try {
+    let log = 'day ' + day + ', part ' + part
 
-  day = pad(day, 2);
+    day = pad(day, 2);
 
-  let input = fs.readFileSync('day' + day + '/input.txt', 'utf8');
-  let solution = (await import('./day' + day + '/part' + part + '.js')).default;
+    let input = fs.readFileSync('day' + day + '/input.txt', 'utf8');
+    let solution = (await import('./day' + day + '/part' + part + '.js')).default;
 
-  let stopwatch = Stopwatch.create();
-  stopwatch.start();
-  let answer = solution(input);
-  stopwatch.stop();
-  log += ' : ' + stopwatch.elapsed.seconds + 's'
+    let stopwatch = Stopwatch.create();
+    stopwatch.start();
+    let answer = solution(input);
+    stopwatch.stop();
+    log += ' : ' + stopwatch.elapsed.seconds + 's'
 
-  console.log(log);
-  console.log(answer);
+    console.log(log);
+    console.log(answer);
+  } catch (e) {
+    console.log(e.stack);
+  }  
 }
