@@ -2,8 +2,6 @@ import R from 'ramda';
 import { rotateAroundX90, rotateAroundY90, rotateAroundZ90, sub, add, equal, manhattan, toString } from '../utils/vec3.js';
 import { bfs } from '../utils/graph-traversal.js';
 
-const debug = x => { debugger; return x; };
-
 const dirs = [
   R.identity,
   rotateAroundZ90,
@@ -25,18 +23,6 @@ const dirRotations = [
 const parseCoords = R.pipe(R.split(','), R.map(Number), R.zipObj(['x', 'y', 'z']));
 const parseScanner = R.pipe(R.split('\r\n'), R.tail, R.map(parseCoords));
 const parseInput = R.pipe(R.split('\r\n\r\n'), R.map(parseScanner));
-
-const allOrientations = v => {
-  const all = [];
-  for(let i = 0; i < 6; i++) {
-    let v2 = dirs[i](v);
-    for(let j = 0; j < 4; j++) {
-      all.push(v2);
-      v2 = dirRotations[i](v2);
-    }
-  }
-  return all;
-};
 
 const allPairs = beacons => {
   const all = [];
@@ -117,8 +103,6 @@ const findOverlaps = scanners => {
 
   for(let overlap of overlaps) {
     let rotation = findRotation(overlap);
-    let s1 = scanners[overlap.i];
-    let s2 = scanners[overlap.j];
     let translation = findTranslation(overlap, rotation);
     overlap.transform = v => translation(rotation(v));
   }
@@ -135,7 +119,6 @@ const align = scanners => {
   }
 
   const getNeighbors = x => {
-    console.log(x);
     return overlaps.filter(y => x.j === y.i)
       .map(y => ({ i: y.i, j: y.j, transform: v => x.transform(y.transform(v)) }));
   };
@@ -150,6 +133,5 @@ const align = scanners => {
   
   return result;
 };
-
 
 export default R.pipe(parseInput, align, x => x.size);
