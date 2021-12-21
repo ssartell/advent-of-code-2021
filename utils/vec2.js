@@ -28,6 +28,10 @@ export const angle = (v1, v2) => Math.atan2(cross(v1, v2), dot(v1, v2));
 export const lerp = (v1, v2, t) => add(scale(v1, 1 - t), scale(v2, t));
 export const map = (f, v) => ({ x: f(v.x), y: f(v.y) });
 export const toString = (v) => `<${v.x}, ${v.y}>`;
+export const fromString = (s) => {
+  const [x, y] = s.slice(1, -1).split(', ');
+  return { x: parseFloat(x), y: parseFloat(y) };
+};
 export const toArray = (v) => [v.x, v.y];
 export const fromArray = (a) => ({x: a[0], y: a[1]});
 export const fromAngle = (a) => ({x: Math.cos(a), y: Math.sin(a)});
