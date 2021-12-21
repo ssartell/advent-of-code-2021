@@ -1,10 +1,12 @@
 export const add = (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z });
 export const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
 export const scale = (a, s) => ({ x: a.x * s, y: a.y * s, z: a.z * s });
+export const neg = (a) => scale(a, -1);
 export const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
 export const cross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x });
 export const equal = (a, b) => a.x === b.x && a.y === b.y && a.z === b.z;
 export const length = (a) => Math.sqrt(dot(a, a));
+export const manhattan = (a) => Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z);
 export const normalize = (a) => scale(a, 1 / length(a));
 export const abs = (a) => ({ x: Math.abs(a.x), y: Math.abs(a.y), z: Math.abs(a.z) });
 export const min = (a, b) => ({ x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), z: Math.min(a.z, b.z) });
@@ -16,3 +18,21 @@ export const map = (f, v) => ({ x: f(v.x), y: f(v.y), z: f(v.z) });
 export const toString = (a) => `<${a.x}, ${a.y}, ${a.z}>`;
 export const toArray = (a) => [a.x, a.y, a.z];
 export const fromArray = (a) => ({ x: a[0], y: a[1], z: a[2] });
+export const rotateAroundX90 = a => ({ x: a.x, y: -a.z, z: a.y });
+export const rotateAroundY90 = a => ({ x: -a.z, y: a.y, z: a.x });
+export const rotateAroundZ90 = a => ({ x: -a.y, y: a.x, z: a.z });
+// export const rotate90 = (v) => ({x: -v.y, y: v.x});
+// export const rotate180 = (v) => ({x: -v.x, y: -v.y});
+// export const rotate270 = (v) => ({x: v.y, y: -v.x});
+export const rotate = (a, axis, angle) => {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+    const m = 1 - c;
+    const mx = m * axis.x;
+    const my = m * axis.y;
+    const mz = m * axis.z;
+    const ax = a.x * mx + a.y * axis.z * s - a.z * axis.y * s;
+    const ay = a.x * my + a.y * mz * s - a.z * axis.x * s;
+    const az = a.x * mz + a.y * axis.y * s - a.z * axis.x * s;
+    return { x: ax, y: ay, z: az };
+}
