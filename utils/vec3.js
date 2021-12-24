@@ -1,6 +1,7 @@
 export const add = (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z });
 export const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
 export const scale = (a, s) => ({ x: a.x * s, y: a.y * s, z: a.z * s });
+export const mult = (a, b) => ({ x: a.x * b.x, y: a.y * b.y, z: a.z * b.z });
 export const neg = (a) => scale(a, -1);
 export const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
 export const cross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x });
@@ -16,6 +17,10 @@ export const sign = (a) => ({ x: Math.sign(a.x), y: Math.sign(a.y), z: Math.sign
 export const lerp = (a, b, t) => add(scale(a, 1 - t), scale(b, t));
 export const map = (f, v) => ({ x: f(v.x), y: f(v.y), z: f(v.z) });
 export const toString = (a) => `<${a.x}, ${a.y}, ${a.z}>`;
+export const fromString = (s) => {
+    const [x, y, z] = s.slice(1, -1).split(', ');
+    return { x: parseInt(x), y: parseInt(y), z: parseInt(z) };
+};
 export const toArray = (a) => [a.x, a.y, a.z];
 export const fromArray = (a) => ({ x: a[0], y: a[1], z: a[2] });
 export const rotateAroundX90 = a => ({ x: a.x, y: -a.z, z: a.y });
@@ -35,4 +40,4 @@ export const rotate = (a, axis, angle) => {
     const ay = a.x * my + a.y * mz * s - a.z * axis.x * s;
     const az = a.x * mz + a.y * axis.y * s - a.z * axis.x * s;
     return { x: ax, y: ay, z: az };
-}
+};
