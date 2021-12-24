@@ -1,18 +1,11 @@
 import R from 'ramda';
-import { sub, add, mult, toString } from '../utils/vec3.js';
-
-const debug = x => { debugger; return x; };
+import { sub, add } from '../utils/vec3.js';
 
 const lineRegex = /x=(-?\d*)..(-?\d*),y=(-?\d*)..(-?\d*),z=(-?\d*)..(-?\d*)/;
 const toPoints = ([x1, x2, y1, y2, z1, z2]) => ({ min: { x: x1, y: y1, z: z1 }, max: { x: x2, y: y2, z: z2 }});
 const parseCoords = R.pipe(R.match(lineRegex), R.tail, R.map(parseInt), x => ({ ...toPoints(x)}));
 const parseLine = R.pipe(R.split(' '), ([state, coords]) => ({ state, ...parseCoords(coords) }));
 const parseInput = R.pipe(R.split('\r\n'), R.map(parseLine), R.addIndex(R.map)((cuboid, i) => ({ ...cuboid, i })));
-
-const insideCube = (c1, c2, p) =>
-  R.min(c1.x, c2.x) <= p.x && p.x <= R.max(c1.x, c2.x) &&
-  R.min(c1.y, c2.y) <= p.y && p.y <= R.max(c1.y, c2.y) &&
-  R.min(c1.z, c2.z) <= p.z && p.z <= R.max(c1.z, c2.z);
 
 const doesIntersect = (c1, c2) => 
   c1.min.x <= c2.max.x && c1.max.x >= c2.min.x &&
@@ -29,26 +22,22 @@ const intersection = (c1, c2) => {
 const volume = c => {
   let v = add(sub(c.max, c.min), { x: 1, y: 1, z: 1 });
   return v.x * v.y * v.z;
-}
+};
 
 const count = cuboids => {
   let applied = [];
   for(let c1 of cuboids) {
-    c1.volume = c1.state === 'on' ? volume(c1) : 0;
-    c1.sign = c1.state === 'on' ? 1 : -1;
-    
+    c1.volume = volume(c1);    
     let overlaps = [];
     for(let c2 of applied) {
       if (!doesIntersect(c1, c2)) continue;
-
       let c3 = intersection(c1, c2);
-      c3.volume = volume(c3);
-      c3.sign = -c2.sign;
+      c3.volume = -Math.sign(c2.volume) * volume(c3);
       overlaps.push(c3);
     }
     applied = c1.state === 'on' ? [...applied, c1, ...overlaps] : [...applied, ...overlaps];
   }
-  return R.sum(R.map(c => c.volume * c.sign, applied));
+  return R.sum(R.map(c => c.volume, applied));
 };
 
 export default R.pipe(parseInput, count);
