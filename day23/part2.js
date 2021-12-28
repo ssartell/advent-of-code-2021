@@ -132,9 +132,6 @@ const getNewState = (state, amphipod, newPos) => {
     newState.home.add(newAmphipod.id);
   }
 
-  // newState.key = getKey(newState);
-  // newState.heuristic = h(newState);
-
   return newState;
 };
 
@@ -173,6 +170,79 @@ const organize = start => {
 
   const getCost = state => state.cost;
   const getHeuristic = state => {
+    let key = getKey(state);
+    if (key === 'A:<3, 5>,A:<7, 4>,A:<9, 3>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<7, 2>,B:<7, 3>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<9, 2>') {
+      console.log(1);
+    }
+    if (key === 'A:<3, 5>,A:<7, 4>,A:<9, 3>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<7, 2>,B:<7, 3>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(2);     
+    }
+    if (key === 'A:<1, 1>,A:<3, 5>,A:<7, 4>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<7, 2>,B:<7, 3>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(3);      
+    }
+    if (key === 'A:<1, 1>,A:<3, 5>,A:<7, 4>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<7, 3>,B:<10, 1>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(4);
+    }
+    if (key === 'A:<1, 1>,A:<3, 5>,A:<7, 4>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<8, 1>,B:<10, 1>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(5);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<8, 1>,B:<10, 1>,C:<5, 2>,C:<5, 3>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(6);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<8, 1>,B:<10, 1>,C:<5, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(7);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<8, 1>,B:<10, 1>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(8);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<6, 1>,B:<8, 1>,B:<10, 1>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<5, 5>,D:<11, 1>') {
+      console.log(9);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<6, 1>,B:<8, 1>,B:<10, 1>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(10);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 5>,B:<8, 1>,B:<10, 1>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(11);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 4>,B:<5, 5>,B:<10, 1>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(12);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 3>,C:<7, 4>,C:<7, 5>,C:<9, 4>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(13);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<9, 5>,B:<3, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(14);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<10, 1>,B:<3, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<3, 3>,D:<3, 4>,D:<4, 1>,D:<11, 1>') {
+      console.log(15);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<10, 1>,B:<3, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<3, 3>,D:<3, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(16);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<3, 3>,D:<3, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(17);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<3, 4>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(18);
+    }
+    if (key === 'A:<1, 1>,A:<2, 1>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<4, 1>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(19);
+    }
+    if (key === 'A:<1, 1>,A:<3, 4>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<4, 1>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(20);
+    }
+    if (key === 'A:<3, 3>,A:<3, 4>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<4, 1>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(21);
+    }
+    if (key === 'A:<3, 3>,A:<3, 4>,A:<3, 5>,A:<10, 1>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<9, 3>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(22);
+    }
+    if (key === 'A:<3, 2>,A:<3, 3>,A:<3, 4>,A:<3, 5>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<9, 3>,D:<9, 4>,D:<9, 5>,D:<11, 1>') {
+      console.log(23);
+    }
+    if (key === 'A:<3, 2>,A:<3, 3>,A:<3, 4>,A:<3, 5>,B:<5, 2>,B:<5, 3>,B:<5, 4>,B:<5, 5>,C:<7, 2>,C:<7, 3>,C:<7, 4>,C:<7, 5>,D:<9, 2>,D:<9, 3>,D:<9, 4>,D:<9, 5>') {
+      console.log(24);
+    }
     let totalCost = 0;
     let home = {};
     let almostHome = {};
@@ -190,12 +260,21 @@ const organize = start => {
       // cost += amphipod.pos.y - (endRow - 1); // breaks shit :(
       totalCost += cost * costs[amphipod.type];
     }
+    // for(let type of amphipodTypes) {
+    //   let left = (state.grid.length - 1) - endRow;
+    //   if (home[type]) {
+    //     left -= home[type];
+    //   }
+    //   let cost = (left * (left + 1) / 2) - (almostHome[type] || 0);
+    //   totalCost += cost * costs[type];
+    // }
+
     for(let type of amphipodTypes) {
       let left = (state.grid.length - 1) - endRow;
       if (home[type]) {
         left -= home[type];
       }
-      let cost = (left * (left + 1) / 2) - (almostHome[type] || 0);
+      let cost = left;
       totalCost += cost * costs[type];
     }
     return totalCost;
@@ -212,10 +291,10 @@ const organize = start => {
     }
     return keys.join(',');
   };
-  
-  let best = aStar(start, isEnd, getNeighbors, getCost, getHeuristic, getKey);
+  console.log(`start: ${getKey(start)}`);
+  let best = aStar(start, isEnd, getNeighbors, getCost, getHeuristic, getKey, replay);
   console.log(`states tested: ${statesTested}`);
-  // if (best) replay(best);
+  if (best) replay(best);
   return best;
 };
 
