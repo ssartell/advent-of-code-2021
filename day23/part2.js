@@ -87,9 +87,9 @@ const wasStopped = (state, amphipod) => state.stopped.has(amphipod.id);
 
 const print = state => {
   let result = `cost: ${state.cost}\n`;
-  if (state.lastMoved) {
-    result += `is valid stop: ${isValidStop(state)}\n`;
-  }
+  // result += `heuristic: ${state.heuristic}\n`;
+  // result += `total: ${state.cost + state.heuristic}\n`;
+  // result += `key: ${getKey(state)}\n`;
   for(let y = 0; y < state.grid.length; y++) {
     for(let x = 0; x < state.grid[y].length; x++) {
       let pos = {x, y};
@@ -132,6 +132,9 @@ const getNewState = (state, amphipod, newPos) => {
     newState.home.add(newAmphipod.id);
   }
 
+  // newState.key = getKey(newState);
+  // newState.heuristic = h(newState);
+
   return newState;
 };
 
@@ -143,8 +146,7 @@ const organize = start => {
     for(let amphipod of state.amphipods) {
       if(!state.home.has(amphipod.id)) return false;
     }
-    console.log(state.cost);
-    return false;
+    return true;
   };
 
   const getNeighbors = state => {
@@ -173,14 +175,19 @@ const organize = start => {
   const getHeuristic = state => {
     let totalCost = 0;
     let home = {};
+    let almostHome = {};
     for(let amphipod of state.amphipods) {
       if (state.home.has(amphipod.id)) {
         home[amphipod.type] = home[amphipod.type] || 0;
         home[amphipod.type]++;
         continue;
       }
+      if (amphipod.pos.y >= endRow && amphipod.pos.x === endCols[amphipod.type]) {
+        almostHome[amphipod.type] = almostHome[amphipod.type] || 0;
+        almostHome[amphipod.type] += state.grid.length - 2 - amphipod.pos.y;
+      }
       let cost = Math.abs(endCols[amphipod.type] - amphipod.pos.x); // horizontal cost
-      cost += amphipod.pos.y - (endRow - 1); // vertical cost
+      // cost += amphipod.pos.y - (endRow - 1); // breaks shit :(
       totalCost += cost * costs[amphipod.type];
     }
     for(let type of amphipodTypes) {
@@ -188,11 +195,11 @@ const organize = start => {
       if (home[type]) {
         left -= home[type];
       }
-      totalCost += (left * (left + 1) / 2) * costs[type];
+      let cost = (left * (left + 1) / 2) - (almostHome[type] || 0);
+      totalCost += cost * costs[type];
     }
     return totalCost;
   };
-
   const sortFns = [
     R.ascend(x => x.type),
     R.ascend(x => x.pos.x),
@@ -205,9 +212,10 @@ const organize = start => {
     }
     return keys.join(',');
   };
+  
   let best = aStar(start, isEnd, getNeighbors, getCost, getHeuristic, getKey);
   console.log(`states tested: ${statesTested}`);
-  if (best) replay(best);
+  // if (best) replay(best);
   return best;
 };
 
