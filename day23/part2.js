@@ -303,7 +303,7 @@ const organize = start => {
     return keys.join(',');
   };
   console.log(`start: ${getKey(start)}`);
-  let best = aStar(start, isEnd, getNeighbors, getCost, getHeuristic, getKey, replay);
+  let best = aStar(start, isEnd, getNeighbors, getCost, getHeuristic, getKey);
   console.log(`states tested: ${statesTested}`);
   if (best) replay(best);
   return best;
