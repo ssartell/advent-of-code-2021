@@ -87,8 +87,8 @@ const wasStopped = (state, amphipod) => state.stopped.has(amphipod.id);
 
 const print = state => {
   let result = `cost: ${state.cost}\n`;
-  // result += `heuristic: ${state.heuristic}\n`;
-  // result += `total: ${state.cost + state.heuristic}\n`;
+  result += `heuristic: ${state.heuristic}\n`;
+  result += `total: ${state.cost + state.heuristic}\n`;
   // result += `key: ${getKey(state)}\n`;
   for(let y = 0; y < state.grid.length; y++) {
     for(let x = 0; x < state.grid[y].length; x++) {
@@ -108,7 +108,7 @@ const replay = state => {
   print(state);
 };
 
-const getNewState = (state, amphipod, newPos) => {
+const getNewState = (state, amphipod, newPos, dir) => {
   let newAmphipod = { ...amphipod, pos: newPos };
   
   let stopped = new Set(state.stopped);
@@ -125,6 +125,7 @@ const getNewState = (state, amphipod, newPos) => {
     stopped,
     home: new Set(state.home),
     lastMoved: newAmphipod,
+    lastDir: dir,
     lastState: state
   };
 
@@ -235,11 +236,20 @@ const organize = start => {
     }
 
     for(let amphipod of amphipods) {
+      let validDirs = dirs;
       if (state.home.has(amphipod.id)) continue;
-      for(let dir of dirs) {
+      if (amphipod === state.lastMoved) {
+        if (amphipod.pos.x === endCols[amphipod.type] && amphipod.pos.y !== 1) {
+          validDirs = [state.lastDir];
+        }
+        // if (amphipod.pos.x !== endCols[amphipod.type] && state.lastMoved.pos.y === 1 && state.lastDir.x !== 0) {
+        //   validDirs = [state.lastDir];
+        // }
+      }
+      for(let dir of validDirs) {
         let newPos = add(amphipod.pos, dir);
         if (!isValid(state, amphipod, dir)) continue;
-        neighbors.push(getNewState(state, amphipod, newPos));
+        neighbors.push(getNewState(state, amphipod, newPos, dir));
       }
     }
     
@@ -250,16 +260,11 @@ const organize = start => {
   const getHeuristic = state => {
     let totalCost = 0;
     let home = {};
-    let almostHome = {};
     for(let amphipod of state.amphipods) {
       if (state.home.has(amphipod.id)) {
         home[amphipod.type] = home[amphipod.type] || 0;
         home[amphipod.type]++;
         continue;
-      }
-      if (amphipod.pos.y >= endRow && amphipod.pos.x === endCols[amphipod.type]) {
-        almostHome[amphipod.type] = almostHome[amphipod.type] || 0;
-        almostHome[amphipod.type] += state.grid.length - 2 - amphipod.pos.y;
       }
       let cost = Math.abs(endCols[amphipod.type] - amphipod.pos.x); // horizontal cost
       // cost += amphipod.pos.y - (endRow - 1); // breaks shit :(
@@ -270,18 +275,19 @@ const organize = start => {
     //   if (home[type]) {
     //     left -= home[type];
     //   }
-    //   let cost = (left * (left + 1) / 2) - (almostHome[type] || 0);
+    //   let cost = (left * (left + 1) / 2);
     //   totalCost += cost * costs[type];
     // }
 
-    for(let type of amphipodTypes) {
-      let left = (state.grid.length - 1) - endRow;
-      if (home[type]) {
-        left -= home[type];
-      }
-      let cost = left;
-      totalCost += cost * costs[type];
-    }
+    // for(let type of amphipodTypes) {
+    //   let left = (state.grid.length - 1) - endRow;
+    //   if (home[type]) {
+    //     left -= home[type];
+    //   }
+    //   let cost = left;
+    //   totalCost += cost * costs[type];
+    // }
+    state.heuristic = totalCost;
     return totalCost;
   };
   const sortFns = [
